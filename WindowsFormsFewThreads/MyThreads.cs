@@ -28,11 +28,11 @@ namespace WindowsFormsFewThreads
         public ThreadStart StartSeven = new ThreadStart(MethodSeven);
         public Thread T_Seven;
         static public int start { get; set; }
-        static public int end;
-        static public int count;
-        static public List<int> vs;
-        static public List<int> prime;
-        static public List<int> seven;
+        static public int end { get; set; }
+        static public int count { get; set; }
+        static public List<int> vs { get; set; }
+        static public List<int> prime { get; set; }
+        static public List<int> seven { get; set; }
         static private void MethodSeven()
         {
             seven.Clear();
@@ -45,6 +45,7 @@ namespace WindowsFormsFewThreads
         static private void MethodPrimeNumber()
         {
             prime.Clear();
+            if(GetList()!=null)
             foreach (var item in GetList())
             {
                 bool b = true;
@@ -56,6 +57,10 @@ namespace WindowsFormsFewThreads
                     }
                 }
                 if (b) prime.Add(item);
+            }
+            else
+            {
+                MessageBox.Show("Ошибка! Объект не имеет значений!");
             }
         }
         static private void MethodRandomNum()
@@ -97,7 +102,7 @@ namespace WindowsFormsFewThreads
             {
                List<int> _vs = new List<int>();  
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<int>));
-            using (FileStream fs = new FileStream("listNumbers.xml", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream("listNumbers.xml", FileMode.Open))
             {
                 _vs = (List<int>)xmlSerializer.Deserialize(fs);
                 MessageBox.Show("Object has been deserialized");
